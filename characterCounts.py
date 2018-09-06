@@ -13,19 +13,7 @@ for i in inntak:
             Dig += 1
         except:
             Pun += 1
-print("     Upper case", end = "")
-for i in range(0, 6 - len(str(Upp))):
-    print(" ", end = "")
-print(Upp)
-print("     Lower case", end = "")
-for i in range(0, 6 - len(str(Low))):
-    print(" ", end = "")
-print(Low)
-print("         Digits", end = "")
-for i in range(0, 6 - len(str(Dig))):
-    print(" ", end = "")
-print(Dig)
-print("    Punctuation", end = "")
-for i in range(0, 6 - len(str(Pun))):
-    print(" ", end = "")
-print(Pun)
+print("{:>15s}".format("Upper case"), "{:5d}".format(Upp))
+print("{:>15s}".format("Lower case"), "{:5d}".format(Low))
+print("{:>15s}".format("Digits"), "{:5d}".format(Dig))
+print("{:>15s}".format("Punctuation"), "{:5d}".format(Pun))
