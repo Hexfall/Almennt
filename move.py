@@ -9,14 +9,20 @@ def hreyfing (char, skipun):
             char -= 1
         return char
 
-n = int(input("Input an position between 1 and 10: "))
-while True:
+def geraSkipan ():
+    "Búa til skipunina"
     print("l - for moving left")
     print("r - for moving right")
     print("Any other letter for quitting")
-    skipan = input("Input your choice: ")
-    if skipan == "r" or skipan == "l":
-        n = hreyfing(n, skipan)
-        print("New position is:", n)
+    inpSkipan = input("Input your choice: ")
+    if inpSkipan == "r" or inpSkipan == "l":
+        return inpSkipan
     else:
-        break
+        print("New position is:", n)
+        exit()
+
+n = int(input("Input a position between 1 and 10: "))
+while True:
+    skipan = geraSkipan()
+    n = hreyfing(n, skipan)
+    print("New position is:", n)
