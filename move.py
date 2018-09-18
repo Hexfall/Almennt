@@ -1,6 +1,7 @@
 def hreyfing (char, skipun):
     "Hreyfa character"
-    if (char == 10 and skipun == "r") or (char == 1 and skipun == "l"):
+    UPPER_LIMIT, LOWER_LIMIT = 10, 1
+    if (char == UPPER_LIMIT and skipun == "r") or (char == LOWER_LIMIT and skipun == "l"):
         return char
     else:
         if skipun == "r":
