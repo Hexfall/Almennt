@@ -62,5 +62,5 @@ while True:
                 print("(S)outh", end="")
             elif leidir[i] == "W":
                 print("(W)est", end="")
-        print()
+        print(".")
 print("Victory!")
