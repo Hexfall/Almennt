@@ -4,13 +4,13 @@ def lesa ():
             br = int(input("Enter number of shares: "))
             break
         except:
-            print("Invalid price!")
+            print("Invalid number!")
     while True:
         try:
             a, b, c = [int(i) for i in input("Enter price (dollars, numerator, denominator): ").split()]
             break
         except:
-            print("Invalid number!")
+            print("Invalid price!")
     return br, a, b, c
 
 def prentVerd (br, ver, tel, nef):
