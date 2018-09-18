@@ -1,6 +1,6 @@
 #!/bin/bash
 git add .
-if [ -z $1 ]
+if [ $# -lt 1 ]
 then
 	git commit -m "Auto-commit"
 else
