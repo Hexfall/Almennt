@@ -18,7 +18,7 @@ class card (object):
             else:
                 self.rank = rank
         suit = suit.upper()
-        if suit in ['H', 'S', 'D', 'C']:
+        if suit in ['S', 'H', 'D', 'C']:
             self.suit = suit
         else:
             self.suit = ""
@@ -32,9 +32,9 @@ class card (object):
             printRank = 'Q'
         elif printRank == 11:
             printRank = 'J'
-        elif printRank = 1:
+        elif printRank == 1:
             printRank = 'A'
-        return "{:<2}{:1}".format(printRank, self.suit)
+        return "{:>2}{:1}".format(printRank, self.suit)
     def is_blank(self):
         if str(self) == 'blk':
             return True
@@ -42,4 +42,26 @@ class card (object):
     
 class Deck (object):
     def __init__(self):
-        
+        def make13(suit):
+            l = []
+            for i in range(1, 14):
+                l.append(card(i, suit))
+            return l
+        self.cards = []
+        self.cards += make13('S')
+        self.cards += make13('H')
+        self.cards += make13('D')
+        self.cards += make13('C')
+    def __str__(self):
+        s = ''
+        for i in range(4):
+            for j in range(13):
+                try:
+                    s += str(self.cards[13 * i + j])
+                except:
+                    pass
+            s += '\n'
+        return s
+
+d = Deck()
+print(d)
