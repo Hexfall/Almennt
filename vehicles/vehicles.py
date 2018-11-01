@@ -1,8 +1,8 @@
 class Vehicle():
     plate = ""
     year = 0
-    weight = 0
-    fee = 0
+    weight = 0.0
+    fee = 0.0
     def __init__(self, the_license, the_year):
         self.plate = the_license
         self.year = the_year
@@ -19,7 +19,7 @@ class Vehicle():
     def set_fee(self, f):
         self.fee = f
     def __str__(self):
-        return "Vehicle: {} {} Weight={} Fee=${}".format(self.plate, self.year, self.weight, self.fee)
+        return "Vehicle: {}  {}  Weight={}  Fee=${}".format(self.plate, self.year, self.weight, self.fee)
 
 class Car(Vehicle):
     def __init__(self, the_license, the_year, the_style):
@@ -34,7 +34,7 @@ class Car(Vehicle):
         else:
             self.fee = 50
     def __str__(self):
-        return "Car: {} {} {} Weight={} Fee=${}".format(self.plate, self.year, self.style, self.weight, self.fee)
+        return "Car: {} {} {}  Weight={}  Fee=${}".format(self.plate, self.year, self.style, self.weight, self.fee)
         
 class Truck(Vehicle):
     def __init__(self, the_license, the_year, the_wheels):
@@ -68,7 +68,7 @@ class Motorbike(Vehicle):
         else:
             self.fee = 35
     def __str__(self):
-        return "Motorbike: {} {} {}cc Fee=${}".format(self.plate, self.year, self.weight, self.fee)
+        return "Motorbike: {} {} {} cc Fee=${}".format(self.plate, self.year, self.CC, self.fee)
 
 def main():
     # Create some vehicles
@@ -96,8 +96,6 @@ def main():
     l = [v1, c1, t1, b1]
     for i in l:
         print(i)
-    print()
-
     v1 = c1
     print(v1)
     print()
