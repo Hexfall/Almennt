@@ -1,36 +1,56 @@
-class Clock(object):
-    def __init__(self, hours=0, minutes=0, seconds=0):
-        self.hours = hours
-        self.minutes = minutes
-        self.seconds = seconds
-    def str_update(self, inp):
-        inp = [int(i) for i in inp.split(':')]
-        self.hours = inp[0]
-        self.minutes = inp[1]
-        self.seconds = inp[2]
-    def add_clocks(self, inpClock):
-        def divm(high, low):
-            quo, mod = divmod(low, 60)
-            high += quo
-            low = mod
-            return high, low
-        newClock = self
-        newClock.hours += inpClock.hours
-        newClock.minutes += inpClock.minutes
-        newClock.seconds += inpClock.seconds
-        newClock.minutes, newClock.seconds = divm(newClock.minutes, newClock.seconds)
-        newClock.hours, newClock.minutes = divm(newClock.hours, newClock.minutes)
-        return newClock
+class Player():
+    def __init__(self, name, year, rating):
+        self.name = name
+        self.year = int(year)
+        self.rating = int(rating)
     def __str__(self):
-        return "{} hours, {} minutes and {} seconds".format(self.hours, self.minutes, self.seconds)
+        return "Name: {}\nYear: {}\nRating: {}".format(self.name, self.year, self.rating)
+    def __gt__(self, other):
+        return self.rating > other.rating
+    def __int__(self):
+        return self.rating
+        
+def get_highest_rated_player(plays):
+    top = plays[0]
+    for i in range(1, len(plays)):
+        if plays[i] > top:
+            top = plays[i]
+    return top
+    
+def get_average_rating(plays):
+    summa = 0
+    for i in plays:
+        summa += int(i)
+    return summa / len(plays)
 
-clock1 = Clock()
-clock2 = Clock()
-print(clock1)
-print(clock2)
-clock1.str_update("03:21:34")
-clock2.str_update("05:45:52")
-print(clock1)
-print(clock2)
-clock3 = clock1.add_clocks(clock2)
-print(clock3)
+def main():
+
+    number_of_players = int(input("Number of players: "))
+    players = []
+    print()
+    print("--- Reading players ---")
+    #here you should get info from the user about 
+    #number_of_players many chess player
+    # code goes here....
+    for i in range(number_of_players):
+        newName = input("Enter Name: ")
+        newYear = input("Enter Year: ")
+        newRating = input("Enter Rating: ")
+        players.append(Player(newName, newYear, newRating))
+        print()
+    
+    print("--- Displaying players --- ")
+    #here you should print each player
+    #code goes here....
+    for i in players:
+        print(i)
+        print()
+
+    highest_rated_player = get_highest_rated_player(players)
+    print("Highest rated player: ")
+    print(highest_rated_player)
+
+    average_rating = get_average_rating(players)
+    print("Average rating:", average_rating)
+
+main()
