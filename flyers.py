@@ -17,7 +17,7 @@ def list_to_dict(inList):
 def most_travelled(inDict):
     curMax = 0
     curMaxName = ""
-    for i in sorted(inDict.keys()):
+    for i in inDict.keys():
         try:
             if len(inDict[i]) > curMax:
                 curMaxName = i
