@@ -1,0 +1,7 @@
+print('Enter License Plate: XGF67')
+print('The rental history of XGF67')
+print('{:<12s} (00354-696-5024)'.format("Guddi Litli"))
+print('\tFrom: 2018:05:16    To: 2018:06:02')
+print('{:<12s} (00354-581-2345)'.format("Dommi"))
+print('\tFrom: 2018:06:05    To: 2018:12:24')
+input()
