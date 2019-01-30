@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forms</title>
+    <meta charset="utf-8" />
+    <meta name="Author" content="Viktor" />
+    <meta name="Desciption" content="http intro">
+</head>
+<body>
+    <form method="post" target="_blank" action="submitEval.php">
+        <fieldset>
+            <legend>
+                Persoanl information:
+            </legend>
+            First Name:<input name="firstname" type="text"><br />
+            Last Name:<input name="lastname" type="text"><br />
+            Social Security Number:<input name="SSID" type="text"><br />
+            Gender:<br />
+            <input type="radio" name="Gender" value="Male">Male<br />
+            <input type="radio" name="Gender" value="Female">Female<br />
+            <input type="radio" name="Gender" value="Other" checked="checked">Other<br />
+        </fieldset>
+        <fieldset>
+            <legend>
+                Course context:
+            </legend>
+            University:<input name="uni" type="text" disabled value="RU"><br />
+            School:<select name="school" disabled>
+                <option value="cs">Computer Science</option>
+            </select><br />
+            Course:<input name="course" type="text" disabled value="T-213-VEFF"><br />
+        </fieldset>
+        <fieldset>
+            <legend>
+                Which lectures did you attend?
+            </legend>
+            <input name="l1" type="checkbox">L1: Introduction<br />
+            <input name="l2" type="checkbox">L2: Networks<br />
+            <input name="l3" type="checkbox">L3: HTML I<br />
+        </fieldset>
+        <fieldset>
+            <legend>
+                Please describe your overall impression of the course
+            </legend>
+            <textarea name="opinion" cols="50" rows="10">My impression of this course is...</textarea>
+        </fieldset>
+        <input type="submit" value="Submit Evaluation">
+    </form>
+</body>
+</html>
