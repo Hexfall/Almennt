@@ -11,6 +11,8 @@ def print_to_screen(head):
         print("")
 
 def palindrome(head):
+    if head.next == None:
+        return True
     return False
 
 if __name__ == "__main__":
