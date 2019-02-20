@@ -10,9 +10,20 @@ def print_to_screen(head):
     else:
         print("")
 
-def palindrome(head):
-    if head.next == None:
+def palindrome(head, cur = 0):
+    def get_size(node):
+        if node == None:
+            return 0
+        return 1 + get_size(node.next)
+    def get_node(node, nr = 0):
+        if nr <= 0 or node == None:
+            return node
+        return get_node(node.next, nr - 1)
+    size = get_size(head)
+    if size == 0 or size == 1 or size // 2 < cur:
         return True
+    if get_node(head, cur).data == get_node(head, size - 1 - cur).data:
+        return palindrome(head, cur + 1)
     return False
 
 if __name__ == "__main__":
