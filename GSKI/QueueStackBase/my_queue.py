@@ -7,7 +7,7 @@ class Queue:
             self.__array = ArrayDeque()
         else:
             self.__array = LinkedList()
-    def push(self, value):
+    def add(self, value):
         self.__array.push_back(value)
     def remove(self):
         return self.__array.pop_front()
