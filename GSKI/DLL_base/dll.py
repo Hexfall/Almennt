@@ -149,3 +149,4 @@ class DLL:
                 node = self.get_pos(j)
                 if node > node.next:
                     switch(node)
+        self.__curr = self.__head
