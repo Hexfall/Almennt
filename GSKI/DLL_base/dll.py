@@ -5,6 +5,15 @@ class Node:
         self.prev = prev
         self.next = next
 
+    def __repr__(self):
+        return self.data
+
+    def __gt__(self, other):
+        return self.data > other.data
+
+    def __lt__(self, other):
+        return self.data < other.data
+
 class DLL:
     def __init__(self):
         self.__head = None
@@ -57,16 +66,44 @@ class DLL:
             self.__head = self.__curr
         if is_tail:
             self.__tail = self.__curr
-        
-    def delete_at(pos):
-        if pos == 0:
-            self.__head = self.__head.next
-            self.__head.prev = None
-        elif pos == len(self) - 1:
-            self.__tail = self.__tail.prev
-            self.__tail.next = None
-        elif 0 < pos < len(self) - 1:
+        self.__size -= 1
 
+    def delete_at(self, pos):
+        if len(self) == 1:
+            self.__init__()
+        elif 0 <= pos < len(self):
+            if pos == 0:
+                if self.__curr is self.__head:
+                    self.__curr = self.__curr.next
+                self.__head = self.__head.next
+                self.__head.prev = None
+            elif pos == len(self) - 1:
+                if self.__curr is self.__tail:
+                    self.__curr = self.__curr.prev
+                self.__tail = self.__tail.prev
+                self.__tail.next = None
+            else:
+                node = self.get_pos(pos)
+                prev, next = node.prev, node.next
+                if self.__curr is node:
+                    self.__curr = self.__curr.next
+                prev.next = next
+                next.prev = prev
+            self.__size -= 1
+
+    def delete_all(self, value):
+        x = 0
+        while x < len(self):
+            node = self.get_pos(x)
+            if node.data == value:
+                if self.__curr is node:
+                    if self.__curr is self.__head:
+                        self.__curr = self.__curr.next
+                    else:
+                        self.__curr = self.__head
+                self.delete_at(x)
+            else:
+                x += 1
 
     def get_value(self):
         return self.__curr.data
@@ -88,4 +125,27 @@ class DLL:
             return get(self.__head, pos)
 
     def move_to_pos(self, pos):
-        self.__curr = self.get_pos(pos)
+        if 0 <= pos < len(self):
+            self.__curr = self.get_pos(pos)
+
+    def reverse(self):
+        node = self.__head
+        newDLL = DLL()
+        while node != None:
+            newDLL.insert(node.data)
+            node = node.next
+        self.__head = newDLL.__head
+        self.__tail = newDLL.__tail
+        self.__curr = newDLL.__curr
+    
+    def sort(self):
+        def switch(node):
+            next = node.next
+            temp = node.data
+            node.data = next.data
+            next.data = temp
+        for i in range(len(self) - 1, 0, -1):
+            for j in range(0, i):
+                node = self.get_pos(j)
+                if node > node.next:
+                    switch(node)
