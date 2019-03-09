@@ -50,13 +50,14 @@ class Bucket():
         while node != None:
             if node.key == key:
                 return node
-        raise NotFoundException
+            node = node.next
+        raise NotFoundException()
     
     def contains(self, key):
         try:
             self.get_at(key)
             return True
-        except NotFoundException:
+        except:
             return False
 
     def __len__(self):
