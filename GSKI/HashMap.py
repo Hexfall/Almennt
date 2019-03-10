@@ -157,7 +157,7 @@ class HashMap():
     
     def __str__(self):
         s = ""
-        for i in range(len(self)):
+        for i in range(self.__size):
             s += "Bucket {}: ".format(i) + str(self.__lis[i])
             s += "\n"
         return s[:-1]
@@ -190,6 +190,6 @@ class MyHashableKey():
         return summa
 
 a = HashMap()
-b = [i for i in range(520)]
-[a.insert(b[i], i) for i in range(520)]
+b = [i for i in range(33)]
+[a.insert(b[i], i) for i in range(33)]
 print(a)
