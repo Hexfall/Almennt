@@ -12,15 +12,15 @@ class Node():
 
 class Bucket():
     def __init__(self):
-        self.__items = None
+        self.items = None
     
     def insert(self, key, data):
         if self.contains(key):
             raise ItemExistsException
-        if self.__items == None:
-            self.__items = Node(key, data)
+        if self.items == None:
+            self.items = Node(key, data)
         else:
-            self.__items = Node(key, data, self.__items)
+            self.items = Node(key, data, self.items)
     
     def update(self, key, data):
         node = self.get_at(key)
@@ -31,9 +31,9 @@ class Bucket():
         return node.data
 
     def remove(self, key):
-        node = self.__items
+        node = self.items
         if node.key == key:
-            self.__items = self.__items.next
+            self.items = self.items.next
         else:
             next = node.next
             while next != None:
@@ -46,7 +46,7 @@ class Bucket():
                 raise NotFoundException()
     
     def get_at(self, key):
-        node = self.__items
+        node = self.items
         while node != None:
             if node.key == key:
                 return node
@@ -65,7 +65,7 @@ class Bucket():
             if head == None:
                 return 0
             return 1 + count(head.next)
-        return count(self.__items)
+        return count(self.items)
 
     def __setitem__(self, key, data):
         if not self.contains(key):
@@ -80,13 +80,90 @@ class Bucket():
         def get(head):
             if head == None:
                 return ""
-            return str(head.data) + " " + get(head.next)
-        return get(self.__items)
+            return str(head.data) + "; " + get(head.next)
+        return get(self.items)[:-2]
+    
+    def __repr__(self):
+        if self.items == None:
+            return "Empty Bucket"
+        else:
+            return self.__str__()
 
-class MashMap():
+class HashMap():
     def __init__(self):
         self.__size = 8
         self.__lis = [Bucket() for _ in range(self.__size)]
+        self.__len = 0
+
+    def __len__(self):
+        return self.__len
+
+    def __compress(self, key):
+        return hash(key) % self.__size
+
+    def __setitem__(self, key, data):
+        if not self.contains(key):
+            self.insert(key, data)
+        else:
+            self.update(key, data)
+    
+    def __getitem__(self, key):
+        pass
+
+    def insert(self, key, data):
+        self.__lis[self.__compress(key)].insert(key, data)
+        self.__len += 1
+        self.rebuild_eval()
+    
+    def update(self, key, data):
+        node = self.get_node(key)
+        node.data = data
+    
+    def rebuild(self):
+        keys, datas = [], []
+        for i in self.__lis:
+            node = i.items
+            while node != None:
+                keys.append(node.key)
+                datas.append(node.data)
+                node = node.next
+        self.__size *= 2
+        self.__lis = [Bucket() for _ in range(self.__size)]
+        self.__len = 0
+        for i in range(len(keys)):
+            self.insert(keys[i], datas[i])
+
+    def rebuild_eval(self):
+        if len(self) >= self.__size * 1.2:
+            self.rebuild()
+    
+    def get_node(self, key):
+        return self.__lis[self.__compress(key)].get_at(key)
+    
+    def contains(self, key):
+        try:
+            self.get_node(key)
+            return True
+        except:
+            return False
+
+    def find(self, key):
+        node = self.get_node(key)
+        return node.data
+
+    def remove(self, key):
+        self.__lis[self.__compress(key)].remove(key)
+        self.__len -= 1
+    
+    def __str__(self):
+        s = ""
+        for i in range(len(self)):
+            s += "Bucket {}: ".format(i) + str(self.__lis[i])
+            s += "\n"
+        return s[:-1]
+
+    def __repr__(self):
+        return self.__str__()
 
 class MyHashableKey():
     def __init__(self, int_value, string_value):
@@ -97,8 +174,8 @@ class MyHashableKey():
         return self.int == other.int and self.str == other.str
     
     def __hash__(self):
-        primes = [2]
-        num = 3
+        primes = [3]
+        num = 5
         while len(primes) < len(self.str) + 1:
             for i in primes:
                 if num % i == 0:
@@ -112,11 +189,7 @@ class MyHashableKey():
             summa += numbers[i]**primes[i]
         return summa
 
-a = Bucket()
-a.insert(1, 1)
-a.insert(2, 2)
-a.insert(3, 3)
-print(a)
-print(a[2])
-a.remove(2)
+a = HashMap()
+b = [i for i in range(520)]
+[a.insert(b[i], i) for i in range(520)]
 print(a)
