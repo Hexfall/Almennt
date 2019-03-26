@@ -174,9 +174,14 @@ class MyHashableKey():
         return self.int == other.int and self.str == other.str
     
     def __hash__(self):
+        numbers = [self.int]
+        for i in self.str:
+            num = str(ord(i))
+            for j in num:
+                numbers.append(int(j))
         primes = [3]
         num = 5
-        while len(primes) < len(self.str) + 1:
+        while len(primes) < len(numbers):
             for i in primes:
                 if num % i == 0:
                     break
@@ -188,8 +193,3 @@ class MyHashableKey():
         for i in range(len(numbers)):
             summa += numbers[i]**primes[i]
         return summa
-
-a = HashMap()
-b = [i for i in range(33)]
-[a.insert(b[i], i) for i in range(33)]
-print(a)
