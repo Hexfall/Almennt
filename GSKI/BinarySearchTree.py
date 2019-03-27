@@ -5,16 +5,23 @@ class ItemExistsException(Exception):
     pass
 
 class Node():
-    def __init__(self, key, data, left = None, right = None):
+    def __init__(self, key, data, left = None, right = None, prev = None):
         self.key = key
         self.data = data
         self.left = left
         self.right = right
+        self.prev = prev
 
 class MyComparableKey():
     def __init__(self, int_value, string_value):
         self.int = int_value
         self.str = string_value
+
+    def __str__(self):
+        return "({}, {})".format(self.int, self.str)
+    
+    def __repr__(self):
+        return str(self)
     
     def __eq__(self, other):
         return self.int == other.int and self.str == other.str
@@ -49,12 +56,12 @@ class BSTMap():
                 raise ItemExistsException()
             elif node.key < key:
                 if node.right == None:
-                    node.right = Node(key, data)
+                    node.right = Node(key, data, prev = node)
                     break
                 node = node.right
             else:
                 if node.left == None:
-                    node.left = Node(key, data)
+                    node.left = Node(key, data, prev = node)
                     break
                 node = node.left
     
@@ -73,9 +80,6 @@ class BSTMap():
                 node = node.left
         raise NotFoundException()
     
-    def get_closest(self, key):
-        pass
-    
     def find(self, key):
         return self.get_node(key).data
     
@@ -87,12 +91,37 @@ class BSTMap():
             return False
     
     def remove(self, key):
-        if len(self) == 1:
-            if self.tree.key == key:
-                self.tree = None
+        def get_side_node(tree):
+            if tree.left != None:
+                return get_right(tree.left)
+            return get_left(tree.right)
+        def get_left(tree):
+            if tree.left == None:
+                return tree
+            return get_left(tree.left)
+        def get_right(tree):
+            if tree.right == None:
+                return tree
+            return get_right(tree.right)
+
+        node = self.get_node(key)
+        if node.prev == None and node.left == None and node.right == None:
+            self.tree = None
+        elif node.right == None and node.left == None:
+            prev = node.prev
+            if prev.right is node:
+                prev.right = None
             else:
-                raise NotFoundException()
-            return
+                prev.left = None
+        else:
+            side = get_side_node(node)
+            node.data = side.data
+            node.key = side.key
+            parent = side.prev
+            if parent.left is side:
+                parent.left = side.right
+            else:
+                parent.right = side.left        
 
     def __str__(self):
         def preorder(tree):
@@ -141,4 +170,6 @@ a.insert(6, 6)
 print(a)
 a.update(6, 7)
 print(len(a))
+print(a)
+a.remove(5)
 print(a)
