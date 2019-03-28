@@ -2,9 +2,9 @@
 	# Ólafur Andri Davíðsson (olafurd18)
 	# Pálmi C. Rúnarsson (palmi18)
 	# Þór Breki Davíðsson (thord18)
-TABLES = ["Customers"]
-COLUMNS = ['CID', 'CN', 'CS', 'CNr', 'CC', 'CZ', 'EID']
-filestream = open("CHECKFD4.sql", "w+", newline="", encoding="UTF-8")
+TABLES = ["COFFEES"]
+COLUMNS = ['DID', 'HID', 'CID', 'DN', 'DS', 'CN', 'CM']
+filestream = open("temp/CHECKFD4.sql", "w+", newline="", encoding="UTF-8")
 query = ""
 def create_query(tablename, column, other_column):
 	query = ""

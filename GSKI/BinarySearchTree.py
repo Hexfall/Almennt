@@ -124,23 +124,13 @@ class BSTMap():
                 parent.right = side.left        
 
     def __str__(self):
-        def preorder(tree):
-            if tree == None:
-                return ""
-            left, right = preorder(tree.left), preorder(tree.right)
-            return " ".join([i for i in [str(tree.data), left, right] if i != ""])
         def inorder(tree):
             if tree == None:
-                return None
-            left, right = inorder(tree.left), inorder(tree.right)
-            return " ".join([i for i in [left, str(tree.data), right] if i != None])
-        def postorder(tree):
-            if tree == None:
                 return ""
-            left, right = postorder(tree.left), postorder(tree.right)
-            return " ".join([i for i in [left, right, str(tree.data)] if i != ""])
+            left, right = inorder(tree.left), inorder(tree.right)
+            return " ".join([i for i in [left, "{" + str(tree.key) + ":" + str(tree.data) + "}", right] if i != ""])
         
-        return "\n".join([preorder(self.tree), inorder(self.tree), postorder(self.tree)])
+        return inorder(self.tree)
         
     def __repr__(self):
         return str(self)
@@ -160,16 +150,3 @@ class BSTMap():
                 return 0
             return 1 + size(tree.left) + size(tree.right)
         return size(self.tree)
-
-a = BSTMap()
-a.insert(5, 5)
-a.insert(3, 3)
-a.insert(4, 4)
-a.insert(2, 2)
-a.insert(6, 6)
-print(a)
-a.update(6, 7)
-print(len(a))
-print(a)
-a.remove(5)
-print(a)
