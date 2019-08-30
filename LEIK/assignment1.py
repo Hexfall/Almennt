@@ -1,3 +1,4 @@
+from math import log2, floor
 
 def pick_up_bricks_type(position):
     """
@@ -8,7 +9,9 @@ def pick_up_bricks_type(position):
         Run: pick_up_bricks_type(position)
         Output: "P"
     """
-    pass
+    if position % 3:
+        return 'N'
+    return 'P'
 
 def chop_type(position):
     """
@@ -19,7 +22,9 @@ def chop_type(position):
         Run: chop_type(position)
         Output: "N"
     """
-    pass
+    if position[0] == position[1]:
+        return 'P'
+    return 'N'
 
 def cut_cake_type(position):
     """
@@ -31,7 +36,55 @@ def cut_cake_type(position):
         Run: cut_cake_type(position)
         Output: "R"
     """
-    pass
+    def louise_moves(position):
+        if position == [] or not [True for i in position if i[0] != 1]:
+            return {'R'}
+        moves = set()
+        for i in position:
+            for j in range(i[1]-1):
+                new_position = [position[cake] for cake in range(len(position)) if cake != i]
+                if not (i[0] == 1 and (i[1] - (j + 1)) == 1):
+                    new_position.append((i[0], i[1] - (j + 1)))
+                if not (i[0] == 1 and (j + 1) == 1):
+                    new_position.append((i[0], j + 1))
+                moves.add(richard_moves(new_position))
+        return moves
+
+    def richard_moves(position):
+        if position == [] or not [True for i in position if i[1] != 1]:
+            return {'L'}
+        moves = set()
+        for i in position:
+            for j in range(i[0]-1):
+                new_position = [position[cake] for cake in range(len(position)) if cake != i]
+                if not (i[1] == 1 and (i[0] - (j + 1)) == 1):
+                    new_position.append((i[1] - (j + 1), i[1]))
+                if not (i[1] == 1 and (j + 1) == 1):
+                    new_position.append((j + 1, i[1]))
+                moves.add(richard_moves(new_position))
+        return moves
+
+    l = louise_moves(position)
+    r = richard_moves(position)
+    print((l, r))
+
+def cut_cake_score(position):
+    RScore, LScore = 0, 0
+    for i in position:
+        if i[0] == 1 and i[1] == 1:
+            continue
+        if i[1] == 1:
+            RScore += i[0] - 1
+        elif i[0] == 1:
+            LScore += i[1] - 1
+        else:
+            RScore += int(floor(log2(i[0])))
+            LScore += int(floor(log2(i[1])))
+    if RScore == LScore:
+        return 'P'
+    if RScore < LScore:
+        return 'L'
+    return 'R'
 
 if __name__ == "__main__":
     # You can test things here
@@ -43,3 +96,4 @@ if __name__ == "__main__":
 
     position = [(2,2),(2,1)]
     print(cut_cake_type(position))
+    print(cut_cake_score(position))
