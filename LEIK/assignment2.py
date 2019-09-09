@@ -27,6 +27,9 @@ def pick_up_bricks_nimber_sum(position):
         Run: pick_up_bricks_nimber_sum(position)
         Output: 2
     '''
+    equivalents = 
+    for i in position:
+
     return -1
 
 if __name__ == "__main__":
