@@ -1,19 +1,25 @@
 from math import sqrt
+
+
+def find(lis, search):
+    half = len(lis) // 2
+    if lis == []:
+        return 0
+    if lis[half] <= search:
+        return half + 1 + find(lis[half + 1:], search)
+    return find(lis[:half], search)
+
+
+def ordered_insert(lis, num):
+    place = find(lis, num)
+    lis.insert(place, num)
+
+
 men = []
 for _ in range(int(input())):
     x, y = [int(i) for i in input().split()]
-    men.append(sqrt(x ** 2 + y ** 2))
-men.sort()
-maximum = men[-1]
-minimum = men[0]
+    ordered_insert(men, sqrt(x ** 2 + y ** 2))
+    
 for _ in range(int(input())):
     target = int(input())
-    if target < minimum:
-        print(0)
-    elif target >= maximum:
-        print(len(men))
-    else:
-        for i in range(1, len(men)):
-            if men[i] > target:
-                print(i)
-                break
+    print(find(men, target))

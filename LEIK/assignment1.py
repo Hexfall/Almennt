@@ -37,36 +37,42 @@ def cut_cake_type(position):
         Output: "R"
     """
     def louise_moves(position):
-        if position == [] or not [True for i in position if i[0] != 1]:
+        if position == [] or not [True for i in position if i[1] != 1]:
             return {'R'}
         moves = set()
         for i in position:
             for j in range(i[1]-1):
-                new_position = [position[cake] for cake in range(len(position)) if cake != i]
+                new_position = [position[cake] for cake in range(len(position)) if not position[cake] is i]
                 if not (i[0] == 1 and (i[1] - (j + 1)) == 1):
                     new_position.append((i[0], i[1] - (j + 1)))
                 if not (i[0] == 1 and (j + 1) == 1):
                     new_position.append((i[0], j + 1))
-                moves.add(richard_moves(new_position))
+                moves = moves.union(richard_moves(new_position))
         return moves
 
-    def richard_moves(position):
-        if position == [] or not [True for i in position if i[1] != 1]:
+    def richard_moves(position): # Incomplete
+        if position == [] or not [True for i in position if i[0] != 1]:
             return {'L'}
         moves = set()
         for i in position:
             for j in range(i[0]-1):
-                new_position = [position[cake] for cake in range(len(position)) if cake != i]
+                new_position = [position[cake] for cake in range(len(position)) if not position[cake] is i]
                 if not (i[1] == 1 and (i[0] - (j + 1)) == 1):
                     new_position.append((i[1] - (j + 1), i[1]))
                 if not (i[1] == 1 and (j + 1) == 1):
                     new_position.append((j + 1, i[1]))
-                moves.add(richard_moves(new_position))
+                moves = moves.union(louise_moves(new_position))
         return moves
 
     l = louise_moves(position)
     r = richard_moves(position)
-    print((l, r))
+    if (('L' in l or 'P' in l) and ('R' in r or 'P' in r)):
+        return 'N'
+    if (('L' in l or 'P' in l) and not ('R' in r or 'P' in r)):
+        return 'L'
+    if (('R' in r or 'P' in r) and not ('L' in l or 'P' in l)):
+        return 'R'
+    return 'P'
 
 def cut_cake_score(position):
     RScore, LScore = 0, 0
