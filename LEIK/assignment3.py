@@ -13,7 +13,7 @@ def dyadic_birthday(num):
     Run: dyadic_birthday(dyadic_number)
     Output: 10
     '''
-    offset = ceil(num)
+    offset = ceil(abs(num))
     log = log2(num.denominator)
     return offset + log
 
@@ -58,7 +58,10 @@ def simplicity_principle(moves):
             lower = upper
             upper = temp
         return sign * find_oldest(lower, upper)
-    if moves[0] == [] or moves[1] == []:
+    if moves[0] == []:
+        moves[0].append(-float('inf'))
+    if moves[1] == []:
+        moves[1].append(float('inf'))
+    if max(moves[0]) > min(moves[1]):
         return None
     return oldest_between(max(moves[0]), min(moves[1]))
-    
