@@ -8,6 +8,9 @@ class Node:
             self.next = Node(data)
         else:
             self.next.Add(data)
+    
+    def __str__(self):
+        return " ".join([str(self.data), str(self.next)])
 
 class LinkedList:
     def __init__(self):
@@ -25,3 +28,12 @@ class LinkedList:
         toRet = self.head.data
         self.head = self.head.next
         return toRet
+    
+    def HeadToTail(self):
+        data = self.Pop()
+        self.Add(data)
+    
+    def __str__(self):
+        if self.head == None:
+            return ""
+        return str(self.head)
