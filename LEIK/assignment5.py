@@ -1,3 +1,5 @@
+from fractions import Fraction
+
 def split_matrix_game(matrix_game):
     '''
     Problem 1(2 points).
@@ -17,11 +19,30 @@ def roses_best_pure_responses(matrix_and_strategy):
     Note that the matrix game is a list of rows and that we zero-index in python/sage.
     Also note that Colin’s input strategy is a transpose of the actual column vector he uses.
     Hint: Start your code matrix_game, colins_strategy = matrix_and_strategy
-    Input: matrix_and_strategy = ([[(1, 4), (2, 4), (3, 3)],[(3, 0), (1, 2), (2, 1)]],[1/2, 0, 1/2])
+    Input: matrix_and_strategy = ([[(1, 4), (2, 4), (3, 3)],
+                                   [(3, 0), (1, 2), (2, 1)]],
+                                  [1/2, 0, 1/2])
     Run: roses_best_pure_responses(matrix_and_strategy)
-    Output: set([0])
+    Output: set([1])
     '''
-    pass
+    def multiply(values, strategy):
+        for row_index in range(len(values)):
+            for col_index in range(len(strategy)):
+                if strategy[col_index] == 0:
+                    values[row_index][col_index] = float('inf')
+                else:
+                    values[row_index][col_index] = float(values[row_index][col_index]*strategy[col_index])
+    
+    matrix, strategy = matrix_and_strategy
+    matrix = split_matrix_game(matrix)[0]
+    multiply(matrix, strategy)
+
+    min_guarantee = max([min(row) for row in matrix])
+    responses = set()
+    for row_index in range(len(matrix)):
+        if min_guarantee in matrix[row_index]:
+            responses.add(row_index)
+    return responses
 
 def colins_best_pure_responses(matrix_and_strategy):
     '''
@@ -29,9 +50,11 @@ def colins_best_pure_responses(matrix_and_strategy):
     Given a tuple of a matrix game and a mixed strategy for Rose, return a set of indices indicating Colin’s best pure responses.
     Note that the matrix game is a list of rows and that we zero-index in python.
     Hint: Start your codematrix_game, roses_strategy = matrix_and_strategy
-    Input: matrix_and_strategy = ([[(1, 4), (2, 4), (3, 3)],[(3, 0), (1, 2), (2, 1)]],[1, 0])
+    Input: matrix_and_strategy = ([[(1, 4), (2, 4), (3, 3)],
+                                   [(3, 0), (1, 2), (2, 1)]],
+                                  [1, 0])
     Run: colins_best_pure_responses(matrix_and_strategy)
-    Output: set([0, 2])
+    Output: set([0, 1])
     '''
     pass
 
@@ -70,3 +93,5 @@ def response_cardinality_matrix(matrix_and_strategy):
     Output: [[(1, 1), (1, 1)], [(1, 1), (1, 1)]]
     '''
     pass
+
+print(roses_best_pure_responses(([[(-3, 3), (0, -3), (1, -2), (1, 3)], [(3, 1), (-1, 0), (-1, 2), (-3, 0)], [(3, 0), (0, -3), (-3, -1), (1, 1)], [(2, -3), (3, -2), (-1, 2), (-2, -2)], [(3, 0), (-3, -2), (1, -3), (-1, -1)], [(2, -1), (0, -3), (-1, -3), (1, -2)]], [Fraction(1, 11), Fraction(1, 11), Fraction(3, 11), Fraction(6, 11)])))
