@@ -19,7 +19,6 @@ class RCB:
         self.curPCB = self.waitlist.Pop()
         if not self.Free():
             self.curPCB.Unblock()
-            self.curPCB.Request(self)
         return self.curPCB
     
     def ConditionalRelease(self, PCB):

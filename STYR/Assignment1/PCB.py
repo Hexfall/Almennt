@@ -24,9 +24,13 @@ class PCB:
         self.resources.Add(resource)
     
     def ReleaseResources(self):
+        pcbs = []
         for resource in self.resources.GetList():
-            resource.ConditionalRelease(self)
+            pcb = resource.ConditionalRelease(self)
             resource.TakeOffWaitlist(self)
+            if not pcb == None:
+                pcbs.append(pcb)
+        return pcbs
 
     def RemoveResource(self, index):
         self.resources.RemoveIndex(index)

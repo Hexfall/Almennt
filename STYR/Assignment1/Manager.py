@@ -33,7 +33,7 @@ class Manager:
         return self.RL.GetProcess()
 
     def Destroy(self, index):
-        if not 0 <= index < PCB_SIZE or self.PCBArray[index] == None:
+        if not 0 < index < PCB_SIZE or self.PCBArray[index] == None:
             self.ErrorMode = True
             return
         PCB = self.PCBArray[index]
@@ -41,7 +41,9 @@ class Manager:
         for child in PCB.chilren.GetList():
             self.Destroy(child.index)
         self.RL.RemoveProcess(PCB.index)
-        PCB.ReleaseResources()
+        pcbs = PCB.ReleaseResources()
+        for pcb in pcbs:
+            self.InsertPCB(pcb)
         self.PCBArray[PCB.index] = None
         
     def Scheduler(self):
